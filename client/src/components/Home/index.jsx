@@ -27,6 +27,7 @@ class Home extends Component {
 
   handleDuelClick = () => {
     this.randomSlingId();
+    console.log(this.state);
     this.props.history.push({
       pathname: `/${slingId}`,
       state: {
