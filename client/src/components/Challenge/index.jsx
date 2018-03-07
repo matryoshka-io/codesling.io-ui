@@ -3,12 +3,13 @@ import { Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 
 import AddChallenge from './AddChallenge/index.jsx';
+import { EINPROGRESS } from 'constants';
 
 class Challenge extends Component {
   state = {
     challenges: []
-   }
-  
+  }
+
   componentDidMount() {
     this.fetchAllChallenges();
   }
@@ -40,3 +41,4 @@ export default Challenge;
 {/* <Switch>
   <Route path='/addChallenge' component={AddChallenge} />
 </ Switch>    */}
+
