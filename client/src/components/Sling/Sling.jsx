@@ -19,7 +19,7 @@ class Sling extends Component {
     this.state = {
       id: null,
       ownerText: null,
-      challengerText: null,
+      challengerText: 'TESTING',
       text: '',
       challenge: '',
       stdout: ''
@@ -29,15 +29,15 @@ class Sling extends Component {
   componentDidMount() {
     const { socket, challenge } = this.props;
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
-    // console.log('startChall', startChall)
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
+      // socket.on('disconnect', () => {
+      //   socket.emit('client.disconnect')
+      // })
     });
 
+
     socket.on('server.initialState', ({ id, text, challenge }) => {
-      // console.log('text', text) text  --> needs to be completed once user clicks btn
-      // console.log('this.props FROM INITIAL', this.props)
-      //text = challenge function
       this.setState({
         id,
         ownerText: text,
@@ -46,8 +46,11 @@ class Sling extends Component {
       });
     });
 
+
+
     socket.on('server.changed', ({ text, email }) => {
-      // console.log('TEXT FROM SLING', text) //what the owner writes in text
+      // console.log('this.props', this.props)
+      // console.log('TXT EMAIL', { text, email })
       if (localStorage.getItem('email') === email) {
         this.setState({ ownerText: text });
       } else {
@@ -64,21 +67,23 @@ class Sling extends Component {
   }
 
   submitCode = () => {
-    // console.log('this.props', this.props)
-    // console.log('this.state', this.state)
+    //should run through test case
     const { socket } = this.props;
     const { ownerText } = this.state;
     const email = localStorage.getItem('email');
-    // console.log('email', email) --> grabs my email
     socket.emit('client.run', { text: ownerText, email });
   }
 
+
   handleChange = throttle((editor, metadata, value) => {
-    // console.log('value', value) //function that the user is writing
-    // console.log('props socket', this.props)
     const email = localStorage.getItem('email');
     this.props.socket.emit('client.update', { text: value, email });
   }, 250)
+
+  setNewTextVal = (e) => {
+    this.setState({ text: e.target.value })
+  }
+
 
   setEditorSize = throttle(() => {
     this.editor.setSize(null, `${window.innerHeight - 80}px`);
