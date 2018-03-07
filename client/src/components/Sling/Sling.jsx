@@ -36,7 +36,7 @@ class Sling extends Component {
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
     });
-    
+
     socket.on('server.initialState', ({ id, text, challenge }) => {
       this.setState({
         id,
@@ -103,7 +103,7 @@ class Sling extends Component {
   render() {
     const { socket } = this.props;
     return (
-      <div className="sling-container">
+      < div className="sling-container" >
         <EditorHeader />
         <div className="code1-editor-container">
           <CodeMirror
@@ -115,12 +115,12 @@ class Sling extends Component {
               theme: 'base16-dark',
             }}
             onChange={this.handleChange}
-            />
+          />
         </div>
         <div className="stdout-container">
-            <h5>{this.state.challenge.title || this.props.challenge.title}</h5>
-            <p>{this.state.challenge.content || this.props.challenge.content}</p>
-          <Stdout text={this.state.stdout}/>
+          <h5>{this.state.challenge.title || this.props.challenge.title}</h5>
+          <p>{this.state.challenge.content || this.props.challenge.content}</p>
+          <Stdout text={this.state.stdout} />
           <Button
             className="run-btn"
             text="Run Code"
@@ -130,7 +130,7 @@ class Sling extends Component {
           />
         </div>
         <div className="code2-editor-container">
-          <CodeMirror 
+          <CodeMirror
             editorDidMount={this.initializeEditor}
             value={this.state.challengerText}
             options={{
@@ -141,7 +141,7 @@ class Sling extends Component {
             }}
           />
         </div>
-      </div>
+      </div >
     )
   }
 }
