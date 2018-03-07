@@ -62,7 +62,6 @@ class Sling extends Component {
     const { socket } = this.props;
     const { ownerText, challenge: { id: challengeId } } = this.state;
     const email = localStorage.getItem('email');
-    const { id } = this.state.challenge;
     socket.emit('client.run', { text: ownerText, email, challengeId, });
   }
 
