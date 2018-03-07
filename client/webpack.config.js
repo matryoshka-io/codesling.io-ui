@@ -3,7 +3,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
-console.log(__dirname);
 
 const options = {
   devTool: 'source-map',

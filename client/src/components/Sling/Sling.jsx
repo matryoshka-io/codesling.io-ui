@@ -60,11 +60,10 @@ class Sling extends Component {
 
   submitCode = () => {
     const { socket } = this.props;
-    const { ownerText } = this.state;
+    const { ownerText, challenge: { id: challengeId } } = this.state;
     const email = localStorage.getItem('email');
-    // console.log(this.state);
     const { id } = this.state.challenge;
-    socket.emit('client.run', { text: ownerText, email, challengeId: id });
+    socket.emit('client.run', { text: ownerText, email, challengeId, });
   }
 
   handleChange = throttle((editor, metadata, value) => {
