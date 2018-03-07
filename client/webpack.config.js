@@ -3,6 +3,7 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
+console.log(__dirname);
 
 const options = {
   devTool: 'source-map',
@@ -45,7 +46,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: 'logo.svg',
-              outputPath: './public/',
+              outputPath: __dirname + '/public/',
               useRelativePath: true,
             },
           },
