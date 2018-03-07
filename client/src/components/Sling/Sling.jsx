@@ -20,7 +20,7 @@ class Sling extends Component {
     this.state = {
       id: null,
       ownerText: null,
-      challengerText: 'TESTING',
+      challengerText: null,
       text: '',
       challenge: '',
       stdout: '',
