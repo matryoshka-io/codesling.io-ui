@@ -34,11 +34,15 @@ class Sling extends Component {
   componentDidMount() {
     const { socket, challenge } = this.props;
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
+    // console.log('startChall', startChall)
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
     });
 
     socket.on('server.initialState', ({ id, text, challenge }) => {
+      // console.log('text', text) text  --> needs to be completed once user clicks btn
+      // console.log('this.props FROM INITIAL', this.props)
+      //text = challenge function
       this.setState({
         id,
         ownerText: text,
@@ -49,6 +53,7 @@ class Sling extends Component {
     });
 
     socket.on('server.changed', ({ text, email }) => {
+      // console.log('TEXT FROM SLING', text) //what the owner writes in text
       if (localStorage.getItem('email') === email) {
         this.setState({ ownerText: text });
       } else {
@@ -74,20 +79,15 @@ class Sling extends Component {
   }
 
   submitCode = () => {
-    if (this.state.solvable) {
-      const { socket } = this.props;
-      const { ownerText, challenge: { id: challengeId } } = this.state;
-      const email = localStorage.getItem('email');
-      socket.emit('client.run', { text: ownerText, email, challengeId, });
-    } else {
-      this.setState({
-        stdout: `${this.state.winner} solved the challenge! He took time ${this.state.timeTaken} seconds.
-        This challenge has already been solved.`,
-      });
-    }
+    const { socket } = this.props;
+    const { ownerText } = this.state;
+    const email = localStorage.getItem('email');
+    socket.emit('client.run', { text: ownerText, email });
   }
 
   handleChange = throttle((editor, metadata, value) => {
+    // console.log('value', value) //function that the user is writing
+    // console.log('props socket', this.props)
     const email = localStorage.getItem('email');
     this.props.socket.emit('client.update', { text: value, email });
   }, 250)
