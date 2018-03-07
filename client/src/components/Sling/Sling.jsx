@@ -74,10 +74,17 @@ class Sling extends Component {
   }
 
   submitCode = () => {
-    const { socket } = this.props;
-    const { ownerText } = this.state;
-    const email = localStorage.getItem('email');
-    socket.emit('client.run', { text: ownerText, email });
+    if (this.state.solvable) {
+      const { socket } = this.props;
+      const { ownerText, challenge: { id: challengeId } } = this.state;
+      const email = localStorage.getItem('email');
+      socket.emit('client.run', { text: ownerText, email, challengeId, });
+    } else {
+      this.setState({
+        stdout: `${this.state.winner} solved the challenge! He took time ${this.state.timeTaken} seconds.
+        This challenge has already been solved.`,
+      });
+    }
   }
 
   handleChange = throttle((editor, metadata, value) => {
@@ -112,9 +119,8 @@ class Sling extends Component {
           />
         </div>
         <div className="stdout-container">
-          {this.state.challenge.title || this.props.challenge.title}
-          <br />
-          {this.state.challenge.content || this.props.challenge.content}
+          <h5>{this.state.challenge.title || this.props.challenge.title}</h5>
+          <p>{this.state.challenge.content || this.props.challenge.content}</p>
           <Stdout text={this.state.stdout} />
           <Button
             className="run-btn"
