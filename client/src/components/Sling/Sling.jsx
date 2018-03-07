@@ -33,7 +33,10 @@ class Sling extends Component {
 
   componentDidMount() {
     const { socket, challenge } = this.props;
+    // console.log('chall obj', { challenge })
+    // console.log('this.props', this.props)
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
+    // console.log('startChall', startChall)
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
 
@@ -96,11 +99,6 @@ class Sling extends Component {
     const email = localStorage.getItem('email');
     this.props.socket.emit('client.update', { text: value, email });
   }, 250)
-
-  setNewTextVal = (e) => {
-    this.setState({ text: e.target.value })
-  }
-
 
   setEditorSize = throttle(() => {
     this.editor.setSize(null, `${window.innerHeight - 80}px`);
