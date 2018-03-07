@@ -45,8 +45,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: 'logo.svg',
-              publicPath: '../',
-              outputPath: 'public/',
+              outputPath: './public/',
               useRelativePath: true,
             },
           },
