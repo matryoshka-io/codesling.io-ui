@@ -29,11 +29,15 @@ class Sling extends Component {
   componentDidMount() {
     const { socket, challenge } = this.props;
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
+    // console.log('startChall', startChall)
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
     });
-    
+
     socket.on('server.initialState', ({ id, text, challenge }) => {
+      // console.log('text', text) text  --> needs to be completed once user clicks btn
+      // console.log('this.props FROM INITIAL', this.props)
+      //text = challenge function
       this.setState({
         id,
         ownerText: text,
@@ -43,6 +47,7 @@ class Sling extends Component {
     });
 
     socket.on('server.changed', ({ text, email }) => {
+      // console.log('TEXT FROM SLING', text) //what the owner writes in text
       if (localStorage.getItem('email') === email) {
         this.setState({ ownerText: text });
       } else {
@@ -59,13 +64,18 @@ class Sling extends Component {
   }
 
   submitCode = () => {
+    // console.log('this.props', this.props)
+    // console.log('this.state', this.state)
     const { socket } = this.props;
     const { ownerText } = this.state;
     const email = localStorage.getItem('email');
+    // console.log('email', email) --> grabs my email
     socket.emit('client.run', { text: ownerText, email });
   }
 
   handleChange = throttle((editor, metadata, value) => {
+    // console.log('value', value) //function that the user is writing
+    // console.log('props socket', this.props)
     const email = localStorage.getItem('email');
     this.props.socket.emit('client.update', { text: value, email });
   }, 250)
@@ -82,7 +92,7 @@ class Sling extends Component {
   render() {
     const { socket } = this.props;
     return (
-      <div className="sling-container">
+      < div className="sling-container" >
         <EditorHeader />
         <div className="code1-editor-container">
           <CodeMirror
@@ -94,13 +104,13 @@ class Sling extends Component {
               theme: 'base16-dark',
             }}
             onChange={this.handleChange}
-            />
+          />
         </div>
         <div className="stdout-container">
-            {this.state.challenge.title || this.props.challenge.title}
-            <br/>
-            {this.state.challenge.content || this.props.challenge.content}
-          <Stdout text={this.state.stdout}/>
+          {this.state.challenge.title || this.props.challenge.title}
+          <br />
+          {this.state.challenge.content || this.props.challenge.content}
+          <Stdout text={this.state.stdout} />
           <Button
             className="run-btn"
             text="Run Code"
@@ -110,7 +120,7 @@ class Sling extends Component {
           />
         </div>
         <div className="code2-editor-container">
-          <CodeMirror 
+          <CodeMirror
             editorDidMount={this.initializeEditor}
             value={this.state.challengerText}
             options={{
@@ -121,7 +131,7 @@ class Sling extends Component {
             }}
           />
         </div>
-      </div>
+      </div >
     )
   }
 }
