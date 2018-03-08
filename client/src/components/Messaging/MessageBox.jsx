@@ -7,6 +7,7 @@ class MessageBox extends Component {
   constructor() {
     super();
     this.state = {
+      user: '',
       message: '',
       allChats: [],
     }
