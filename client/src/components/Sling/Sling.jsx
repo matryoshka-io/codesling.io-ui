@@ -22,8 +22,9 @@ class Sling extends Component {
       challengerText: null,
       text: '',
       challenge: '',
-      stdout: ''
-    }
+      stdout: '',
+      solvable: true,
+    };
   }
 
   componentDidMount() {
@@ -50,19 +51,27 @@ class Sling extends Component {
       }
     });
 
-    socket.on('server.run', ({ stdout, email }) => {
+    socket.on('server.run', ({ stdout, email, solvable }) => {
+      // console.log(solvable);
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null;
+      this.setState({ solvable });
     });
 
     window.addEventListener('resize', this.setEditorSize);
   }
 
   submitCode = () => {
-    const { socket } = this.props;
-    const { ownerText, challenge: { id: challengeId } } = this.state;
-    const email = localStorage.getItem('email');
-    socket.emit('client.run', { text: ownerText, email, challengeId, });
+    if (this.state.solvable) {
+      const { socket } = this.props;
+      const { ownerText, challenge: { id: challengeId } } = this.state;
+      const email = localStorage.getItem('email');
+      socket.emit('client.run', { text: ownerText, email, challengeId, });
+    } else {
+      this.setState({
+        stdout: 'This challenge has already been solved.',
+      });
+    }
   }
 
   handleChange = throttle((editor, metadata, value) => {
