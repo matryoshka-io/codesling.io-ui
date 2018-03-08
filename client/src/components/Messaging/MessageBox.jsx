@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client';
-import { uniq } from 'lodash';
 
 import Button from '../globals/Button'
 
@@ -71,7 +70,6 @@ class MessageBox extends Component {
           position: fixed;
           bottom: 0px;
           border-style: solid;
-          border-color: blue;
         }
         .message-bar {
           display: flex;
