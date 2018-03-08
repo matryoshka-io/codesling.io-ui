@@ -24,6 +24,7 @@ class Sling extends Component {
       challenge: '',
       stdout: '',
       solvable: true,
+      winner: '',
     };
   }
 
@@ -55,7 +56,13 @@ class Sling extends Component {
       // console.log(solvable);
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null;
-      this.setState({ solvable });
+      if (!solvable) {
+        this.setState({
+          solvable,
+          stdout: `${email} solved the challenge!`,
+          winner: email,
+        });
+      }
     });
 
     window.addEventListener('resize', this.setEditorSize);
@@ -69,7 +76,8 @@ class Sling extends Component {
       socket.emit('client.run', { text: ownerText, email, challengeId, });
     } else {
       this.setState({
-        stdout: 'This challenge has already been solved.',
+        stdout: `${this.state.winner} solved the challenge!
+        This challenge has already been solved.`,
       });
     }
   }
