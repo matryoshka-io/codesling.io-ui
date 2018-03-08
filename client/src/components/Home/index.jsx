@@ -17,7 +17,7 @@ class Home extends Component {
 
    async componentDidMount() {
     const id = localStorage.getItem('id');
-    const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`)
+    const { data } = await axios.get(`${process.env.REACT_APP_REST_SERVER_URL}/usersChallenges/${id}`)
     this.setState({ allChallenges: data.rows });
    }
 
@@ -34,7 +34,7 @@ class Home extends Component {
       }
     });
   }
-  
+
   handleAddChallengeClick = () => {
     this.props.history.push('/addChallenge');
   }
