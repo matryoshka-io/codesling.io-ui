@@ -5,6 +5,7 @@ class MessageBox extends Component {
   constructor() {
     super();
     this.state = {
+      user: '',
       message: '',
     }
   }
@@ -18,16 +19,17 @@ class MessageBox extends Component {
   }
 
   sendMessage = (message) => {
-    // console.log('this.props', this.props)
-    // const message = this.state.message;
-    // console.log()
     let socket = io('http://localhost:4155');
-    socket.emit('click')
-    console.log('message', message)
     const ownerEmail = localStorage.getItem('email');
     if (message && ownerEmail) {
       socket.emit('message', { message: message, user: ownerEmail })
     }
+    socket.on('newMessage', data => {
+      this.setState({
+        user: data.user,
+        message: data.message,
+      })
+    })
   }
 
   onTextChangeHandler = (e) => {
@@ -35,7 +37,6 @@ class MessageBox extends Component {
   }
 
   buttonClickHandler = () => {
-    console.log('did i make it')
     this.sendMessage(this.state.message)
   }
 
@@ -43,6 +44,7 @@ class MessageBox extends Component {
     return (
       <div className="messaging-box">
         <div className="display-message">
+          {this.state.user} {this.state.message}
           <div className="message-bar">
             <input id="text" type="text" onChange={this.onTextChangeHandler} />
             <div id="chat-btn">
