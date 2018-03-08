@@ -10,6 +10,7 @@ class MessageBox extends Component {
       message: '',
       allChats: [],
     }
+
   }
 
   componentDidMount() {
@@ -69,7 +70,6 @@ class MessageBox extends Component {
         .messaging-box {
           position: fixed;
           bottom: 0px;
-          border-style: solid;
         }
         .message-bar {
           display: flex;
