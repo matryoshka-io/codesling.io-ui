@@ -17,8 +17,13 @@ class Home extends Component {
 
    async componentDidMount() {
     const id = localStorage.getItem('id');
-    const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`)
-    this.setState({ allChallenges: data.rows });
+    const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`);
+    const { data: { clout }} = await axios.get(`http://localhost:3396/api/users/user/${id}/clout`);
+    // console.log(response);
+    this.setState({
+      allChallenges: data.rows,
+      clout,
+    });
    }
 
   randomSlingId = () => {
@@ -52,6 +57,7 @@ class Home extends Component {
           className="landing-page-logo"
         />
         <br />
+        <p>Your clout: {this.state.clout}</p>
         <select onChange={(e) => this.handleChallengeSelect(e)}>
           {this.state.allChallenges.map(challenge => {
             return (
