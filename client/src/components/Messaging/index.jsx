@@ -13,16 +13,6 @@ class Messaging extends Component {
         <div className="messageBox">
           <MessageBox socket={this.props} />
         </div>
-        <div className="text-bar">
-          <div className="chatTextArea">
-            <input id="text" type="text" onChange={this.onChangeHandler}></input>
-          </div>
-          <div className="chatbtn">
-            <button type="button">Chat</button>
-          </div>
-        </div>
-
-
         <style>{`
         #text {
           width: 225px;
