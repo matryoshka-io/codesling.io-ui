@@ -1,35 +1,58 @@
 import React, { Component } from 'react'
-import io from 'socket.io-client/dist/socket.io.js';
+import io from 'socket.io-client/dist/socket.io.js';;
 
 class MessageBox extends Component {
   constructor() {
     super();
     this.state = {
-      ownerMessage: 'HELLO FROM OWNER',
-      challengerMessage: 'HELLO FROM CHALLENGER',
+      message: '',
     }
+
   }
 
   componentDidMount() {
-    console.log('this.props from msgbox', this.props)
-    // const ({ socket }) = this.props;
-    // socket.on('connect', () => {
-    //   socket.emit('client.ready')
-    // })
-    const socket = this.props.socket.socket
-    socket.on('connect', () => {
-      socket.emit('client.ready')
-    })
+    const socket = io();
+
   }
 
+  createUsername = () => {
+    socket.emit('createUsername') //grab the username 
+  }
 
+  sendMessage = () => {
+    console.log('this.props', this.props)
+    const message = this.state.message;
+    const ownerEmail = localStorage.getItem('email');
+    if (message && ownerEmail) {
+      socket.emit('message', { message, user: ownerEmail })
+    }
+  }
+
+  onTextChangeHandler = (e) => {
+    this.setState({ message: e.target.value })
+  }
+
+  buttonClickHandler = () => {
+
+  }
 
   render() {
-    console.log('this.props from msg', this.props)
     return (
-      <div>
-        {this.state.ownerMessage} <br />
-        {this.state.challengerMessage}
+      <div className="messaging-box">
+        <div className="display-message">
+          <div className="message-bar">
+            <input id="text" type="text" onChange={this.onTextChangeHandler} />
+            <div id="chat-btn">
+              <button type="button" onClick={this.buttonClickHandler}>Click</button>
+            </div>
+          </div>
+        </div>
+        <style>{`
+        #text {
+          width: 225px;
+          height: 10px;
+        }
+        `}</style>
       </div>
     )
   }
