@@ -26,7 +26,7 @@ export default class Login extends Component {
       username
     }
     try {
-      const data = await axios.post(`http://localhost:3396/api/auth/login`, body);
+      const data = await axios.post(`${process.env.HOST}/api/auth/login`, body);
       localStorage.setItem('email', data.data.email)
       localStorage.setItem('id', data.data.id)
       localStorage.setItem('token', data.data.token.accessToken)
@@ -51,7 +51,7 @@ export default class Login extends Component {
             placeholder={'enter email'}
             onChange={this.handleInputChange}
             />
-          <Input 
+          <Input
             name='password'
             type='password'
             placeholder={'enter your password'}
