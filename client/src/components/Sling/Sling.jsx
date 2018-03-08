@@ -7,6 +7,7 @@ import { throttle } from 'lodash';
 import Stdout from './StdOut/index.jsx';
 import EditorHeader from './EditorHeader';
 import Button from '../globals/Button';
+import Messaging from '../Messaging/index.jsx';
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -32,6 +33,7 @@ class Sling extends Component {
 
   componentDidMount() {
     const { socket, challenge } = this.props;
+    // console.log('socket', { socket })
     // console.log('chall obj', { challenge })
     // console.log('this.props', this.props)
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
@@ -57,8 +59,6 @@ class Sling extends Component {
 
 
     socket.on('server.changed', ({ text, email }) => {
-      // console.log('this.props', this.props)
-      // console.log('TXT EMAIL', { text, email })
       if (localStorage.getItem('email') === email) {
         this.setState({ ownerText: text });
       } else {
@@ -107,6 +107,7 @@ class Sling extends Component {
 
   render() {
     const { socket } = this.props;
+    console.log('this.props.socket', this.props.socket)
     return (
       < div className="sling-container" >
         <EditorHeader />
@@ -125,6 +126,7 @@ class Sling extends Component {
         <div className="stdout-container">
           {this.state.challenge.title || this.props.challenge.title}
           <br />
+          {/* put function here */}
           {this.state.challenge.content || this.props.challenge.content}
           <Stdout text={this.state.stdout} />
           <Button
@@ -134,6 +136,7 @@ class Sling extends Component {
             color="white"
             onClick={() => this.submitCode()}
           />
+          <Messaging socket={this.props.socket} />
         </div>
         <div className="code2-editor-container">
           <CodeMirror
