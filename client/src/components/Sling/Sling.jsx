@@ -7,7 +7,11 @@ import { throttle } from 'lodash';
 import Stdout from './StdOut/index.jsx';
 import EditorHeader from './EditorHeader';
 import Button from '../globals/Button';
+<<<<<<< HEAD
 import MessagingIndex from '../Messaging/index.jsx'
+=======
+import Messaging from '../Messaging/index.jsx';
+>>>>>>> [msg] including divs
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -33,6 +37,7 @@ class Sling extends Component {
 
   componentDidMount() {
     const { socket, challenge } = this.props;
+    // console.log('socket', { socket })
     // console.log('chall obj', { challenge })
     // console.log('this.props', this.props)
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
@@ -58,8 +63,6 @@ class Sling extends Component {
 
 
     socket.on('server.changed', ({ text, email }) => {
-      // console.log('this.props', this.props)
-      // console.log('TXT EMAIL', { text, email })
       if (localStorage.getItem('email') === email) {
         this.setState({ ownerText: text });
       } else {
@@ -108,6 +111,7 @@ class Sling extends Component {
 
   render() {
     const { socket } = this.props;
+    console.log('this.props.socket', this.props.socket)
     return (
       < div className="sling-container" >
         <EditorHeader />
