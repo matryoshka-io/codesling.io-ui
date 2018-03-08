@@ -19,7 +19,6 @@ class Home extends Component {
     const id = localStorage.getItem('id');
     const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`);
     const { data: { clout }} = await axios.get(`http://localhost:3396/api/users/user/${id}/clout`);
-    // console.log(response);
     this.setState({
       allChallenges: data.rows,
       clout,
