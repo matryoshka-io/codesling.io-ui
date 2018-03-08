@@ -7,7 +7,7 @@ import { throttle } from 'lodash';
 import Stdout from './StdOut/index.jsx';
 import EditorHeader from './EditorHeader';
 import Button from '../globals/Button';
-import Messaging from '../Messaging/index.jsx';
+import MessagingIndex from '../Messaging/index.jsx'
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -33,20 +33,16 @@ class Sling extends Component {
 
   componentDidMount() {
     const { socket, challenge } = this.props;
-    // console.log('socket', { socket })
-    // console.log('chall obj', { challenge })
-    // console.log('this.props', this.props)
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
     // console.log('startChall', startChall)
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
-      // socket.on('disconnect', () => {
-      //   socket.emit('client.disconnect')
-      // })
     });
 
-
     socket.on('server.initialState', ({ id, text, challenge }) => {
+      // console.log('text', text) text  --> needs to be completed once user clicks btn
+      // console.log('this.props FROM INITIAL', this.props)
+      //text = challenge function
       this.setState({
         id,
         ownerText: text,
@@ -56,9 +52,8 @@ class Sling extends Component {
       });
     });
 
-
-
     socket.on('server.changed', ({ text, email }) => {
+      // console.log('TEXT FROM SLING', text) //what the owner writes in text
       if (localStorage.getItem('email') === email) {
         this.setState({ ownerText: text });
       } else {
@@ -90,7 +85,6 @@ class Sling extends Component {
     socket.emit('client.run', { text: ownerText, email });
   }
 
-
   handleChange = throttle((editor, metadata, value) => {
     const email = localStorage.getItem('email');
     this.props.socket.emit('client.update', { text: value, email });
@@ -107,7 +101,6 @@ class Sling extends Component {
 
   render() {
     const { socket } = this.props;
-    console.log('this.props.socket', this.props.socket)
     return (
       < div className="sling-container" >
         <EditorHeader />
@@ -126,7 +119,6 @@ class Sling extends Component {
         <div className="stdout-container">
           {this.state.challenge.title || this.props.challenge.title}
           <br />
-          {/* put function here */}
           {this.state.challenge.content || this.props.challenge.content}
           <Stdout text={this.state.stdout} />
           <Button
@@ -136,7 +128,7 @@ class Sling extends Component {
             color="white"
             onClick={() => this.submitCode()}
           />
-          <Messaging socket={this.props.socket} />
+          <MessagingIndex />
         </div>
         <div className="code2-editor-container">
           <CodeMirror
