@@ -34,6 +34,7 @@ class Sling extends Component {
 
   componentDidMount() {
     const { socket, challenge } = this.props;
+    // console.log('socket', { socket })
     // console.log('chall obj', { challenge })
     // console.log('this.props', this.props)
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
@@ -112,6 +113,7 @@ class Sling extends Component {
 
   render() {
     const { socket } = this.props;
+    console.log('this.props.socket', this.props.socket)
     return (
       < div className="sling-container" >
         <EditorHeader />
@@ -128,8 +130,15 @@ class Sling extends Component {
           />
         </div>
         <div className="stdout-container">
+<<<<<<< HEAD
           <h5>{this.state.challenge.title || this.props.challenge.title}</h5>
           <p>{this.state.challenge.content || this.props.challenge.content}</p>
+=======
+          {this.state.challenge.title || this.props.challenge.title}
+          <br />
+          {/* put function here */}
+          {this.state.challenge.content || this.props.challenge.content}
+>>>>>>> [msg] including divs
           <Stdout text={this.state.stdout} />
           <Button
             className="run-btn"
@@ -138,7 +147,11 @@ class Sling extends Component {
             color="white"
             onClick={() => this.submitCode()}
           />
+<<<<<<< HEAD
           <MessagingIndex socket={this.props.socket} />
+=======
+          <Messaging socket={this.props.socket} />
+>>>>>>> [msg] including divs
         </div>
         <div className="code2-editor-container">
           <CodeMirror
