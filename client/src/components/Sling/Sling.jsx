@@ -7,11 +7,8 @@ import { throttle } from 'lodash';
 import Stdout from './StdOut/index.jsx';
 import EditorHeader from './EditorHeader';
 import Button from '../globals/Button';
-<<<<<<< HEAD
 import MessagingIndex from '../Messaging/index.jsx'
-=======
-import Messaging from '../Messaging/index.jsx';
->>>>>>> [msg] including divs
+
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -37,18 +34,10 @@ class Sling extends Component {
 
   componentDidMount() {
     const { socket, challenge } = this.props;
-    // console.log('socket', { socket })
-    // console.log('chall obj', { challenge })
-    // console.log('this.props', this.props)
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
-    // console.log('startChall', startChall)
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
-      // socket.on('disconnect', () => {
-      //   socket.emit('client.disconnect')
-      // })
     });
-
 
     socket.on('server.initialState', ({ id, text, challenge }) => {
       this.setState({
@@ -59,8 +48,6 @@ class Sling extends Component {
         timeStarted: new Date(),
       });
     });
-
-
 
     socket.on('server.changed', ({ text, email }) => {
       if (localStorage.getItem('email') === email) {
@@ -94,7 +81,6 @@ class Sling extends Component {
     socket.emit('client.run', { text: ownerText, email });
   }
 
-
   handleChange = throttle((editor, metadata, value) => {
     const email = localStorage.getItem('email');
     this.props.socket.emit('client.update', { text: value, email });
@@ -111,7 +97,6 @@ class Sling extends Component {
 
   render() {
     const { socket } = this.props;
-    console.log('this.props.socket', this.props.socket)
     return (
       < div className="sling-container" >
         <EditorHeader />
