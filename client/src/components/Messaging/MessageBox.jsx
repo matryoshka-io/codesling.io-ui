@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import io from 'socket.io-client/dist/socket.io.js';;
+import io from 'socket.io-client';
 
 class MessageBox extends Component {
   constructor() {
@@ -7,11 +7,9 @@ class MessageBox extends Component {
     this.state = {
       message: '',
     }
-
   }
 
   componentDidMount() {
-    const socket = io();
 
   }
 
@@ -19,12 +17,16 @@ class MessageBox extends Component {
     socket.emit('createUsername') //grab the username 
   }
 
-  sendMessage = () => {
-    console.log('this.props', this.props)
-    const message = this.state.message;
+  sendMessage = (message) => {
+    // console.log('this.props', this.props)
+    // const message = this.state.message;
+    // console.log()
+    let socket = io('http://localhost:4155');
+    socket.emit('click')
+    console.log('message', message)
     const ownerEmail = localStorage.getItem('email');
     if (message && ownerEmail) {
-      socket.emit('message', { message, user: ownerEmail })
+      socket.emit('message', { message: message, user: ownerEmail })
     }
   }
 
@@ -33,7 +35,8 @@ class MessageBox extends Component {
   }
 
   buttonClickHandler = () => {
-
+    console.log('did i make it')
+    this.sendMessage(this.state.message)
   }
 
   render() {
