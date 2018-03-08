@@ -30,15 +30,11 @@ class Sling extends Component {
   componentDidMount() {
     const { socket, challenge } = this.props;
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
-    // console.log('startChall', startChall)
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
     });
 
     socket.on('server.initialState', ({ id, text, challenge }) => {
-      // console.log('text', text) text  --> needs to be completed once user clicks btn
-      // console.log('this.props FROM INITIAL', this.props)
-      //text = challenge function
       this.setState({
         id,
         ownerText: text,
@@ -48,7 +44,6 @@ class Sling extends Component {
     });
 
     socket.on('server.changed', ({ text, email }) => {
-      // console.log('TEXT FROM SLING', text) //what the owner writes in text
       if (localStorage.getItem('email') === email) {
         this.setState({ ownerText: text });
       } else {
