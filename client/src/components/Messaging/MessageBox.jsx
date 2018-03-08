@@ -10,7 +10,6 @@ class MessageBox extends Component {
       message: '',
       allChats: [],
     }
-
   }
 
   componentDidMount() {
