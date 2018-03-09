@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client';
+import { uniq } from 'lodash';
 
-import ChatList from './ChatList.jsx'
 import Button from '../globals/Button'
 
 class MessageBox extends Component {
@@ -15,29 +15,25 @@ class MessageBox extends Component {
   }
 
   componentDidMount() {
-    // this.state.allChats.forEach(chat => {
-
-    // })
+    let { socket } = this.props;
+    console.log('this.props', this.props)
+    socket.on('connect', () => {
+      socket.on('newMessage', newMessage => {
+        console.log('newMsg', [newMessage])
+        let dataArr = [newMessage.messages]
+        console.log('dataArr', dataArr)
+        this.setState({
+          allChats: this.state.allChats.concat(dataArr),
+          user: newMessage.user,
+        })
+      })
+    });
   }
 
-  // createUsername = () => {
-  //   socket.emit('createUsername') //grab the username 
-  // }
-
   sendMessage = (messageToSend) => {
-    let socket = io('http://localhost:4155');
+    let { socket } = this.props;
     const ownerEmail = localStorage.getItem('email');
-    if (messageToSend && ownerEmail) {
-      socket.emit('message', { message: messageToSend, user: ownerEmail })
-    } else {
-      alert('Please include a message.')
-    }
-    socket.on('newMessage', data => {
-      console.log('data', data)
-      this.state.allChats.push(data)
-      console.log('this.state.allChats', this.state.allChats)
-      // this.setState({ user: data.user, message: data.message })
-    })
+    socket.emit('message', { user: ownerEmail, messages: this.state.message })
   }
 
   onTextChangeHandler = (e) => {
@@ -49,12 +45,19 @@ class MessageBox extends Component {
   }
 
   render() {
+    console.log('this.state.allChats', this.state.allChats)
     return (
       <div className="messaging-box">
         <div className="display-message">
+          {this.state.allChats.map((chat, index) => {
+            return (
+              <div>
+                {this.state.user} {chat}
+              </div>
+            )
+          })}
           <div className="message-bar">
-            <input id="text" type="text" onChange={this.onTextChangeHandler} />
-            {/* <button id="chat-btn" type="button" onClick={this.buttonClickHandler}>Send</button> */}
+            <input id="text" type="text" onChange={e => this.onTextChangeHandler(e)} />
             <Button
               backgroundColor="red"
               color="white"
