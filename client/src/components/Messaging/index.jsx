@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import MessageBox from './MessageBox.jsx';
+import React, { Component } from 'react'
 
-class ChatIndex extends Component {
+import MessageBox from './MessageBox.jsx'
+
+class Messaging extends Component {
   constructor(props) {
     super(props)
   }
