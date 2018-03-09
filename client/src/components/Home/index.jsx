@@ -17,8 +17,8 @@ class Home extends Component {
 
    async componentDidMount() {
     const id = localStorage.getItem('id');
-    const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`);
-    const { data: { clout } } = await axios.get(`http://localhost:3396/api/users/user/${id}/clout`);
+    const { data } = await axios.get(`${process.env.REACT_APP_REST_SERVER_URL}/api/usersChallenges/${id}`);
+    const { data: { clout } } = await axios.get(`${process.env.REACT_APP_REST_SERVER_URL}/api/users/user/${id}/clout`);
     this.setState({
       allChallenges: data.rows,
       clout,
