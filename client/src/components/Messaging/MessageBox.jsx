@@ -40,7 +40,6 @@ class MessageBox extends Component {
   }
 
   render() {
-    console.log('this.state.allChats', this.state.allChats)
     return (
       <div className="messaging-box">
         <div className="display-message">
@@ -67,14 +66,6 @@ class MessageBox extends Component {
           height: 10px;
           font-size: 12px;
           padding: 15px 0px 15px 8px;;
-        }
-        .messageBox {
-          border-style: solid;
-          border-color: green;
-        }
-        .messaging {
-          border-style: solid;
-          border-color: pink;
         }
         .messaging-box {
           position: fixed;
