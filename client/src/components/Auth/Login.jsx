@@ -26,7 +26,7 @@ export default class Login extends Component {
       username
     }
     try {
-      console.log(process.env.REACT_APP_REST_SERVER_URL);
+      console.log('process.env\n', process.env);
       const data = await axios.post(`${process.env.REACT_APP_REST_SERVER_URL}/api/auth/login`, body);
       localStorage.setItem('email', data.data.email)
       localStorage.setItem('id', data.data.id)
