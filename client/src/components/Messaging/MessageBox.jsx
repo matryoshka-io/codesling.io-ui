@@ -70,8 +70,6 @@ class MessageBox extends Component {
         .messaging-box {
           position: fixed;
           bottom: 0px;
-          border-style: solid;
-          border-color: blue;
         }
         .message-bar {
           display: flex;

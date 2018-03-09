@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import MessageBox from './MessageBox.jsx'
 
-class Messaging extends Component {
+class ChatIndex extends Component {
   constructor(props) {
     super(props)
   }
