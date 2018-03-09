@@ -17,7 +17,7 @@ class MessageBox extends Component {
   componentDidMount() {
     let { socket } = this.props;
     socket.on('connect', () => {
-      socket.on('newMessage', newMessage => {
+      socket.on('server.newMessage', newMessage => {
         let dataArr = [newMessage]
         this.setState({
           allChats: this.state.allChats.concat(dataArr),
@@ -29,7 +29,7 @@ class MessageBox extends Component {
   sendMessage = (messageToSend) => {
     let { socket } = this.props;
     const ownerEmail = localStorage.getItem('email');
-    socket.emit('message', { user: ownerEmail, messages: this.state.message })
+    socket.emit('client.chat', { user: ownerEmail, messages: this.state.message })
   }
 
   onTextChangeHandler = (e) => {
