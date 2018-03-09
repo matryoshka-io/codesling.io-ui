@@ -26,8 +26,6 @@ export default class Signup extends Component {
       username
     }
     try {
-      console.log('WTF YO ENV IS\n', process.env);
-      console.log(REACT_APP_REST_SERVER_URL);
       const data = await axios.post(`${process.env.REACT_APP_REST_SERVER_URL}/api/auth/signup`, body);
       data ? this.props.history.push('/login') : this.props.history.push('/auth');
     } catch (err) {
