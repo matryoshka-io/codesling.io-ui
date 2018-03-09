@@ -21,7 +21,7 @@ class Sling extends Component {
     this.state = {
       id: null,
       ownerText: null,
-      challengerText: null,
+      challengerText: 'TESTING',
       text: '',
       challenge: '',
       stdout: '',
@@ -37,7 +37,9 @@ class Sling extends Component {
     const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
+
     });
+
 
     socket.on('server.initialState', ({ id, text, challenge }) => {
       this.setState({
@@ -48,6 +50,8 @@ class Sling extends Component {
         timeStarted: new Date(),
       });
     });
+
+
 
     socket.on('server.changed', ({ text, email }) => {
       if (localStorage.getItem('email') === email) {
@@ -88,10 +92,16 @@ class Sling extends Component {
     }
   }
 
+
   handleChange = throttle((editor, metadata, value) => {
     const email = localStorage.getItem('email');
     this.props.socket.emit('client.update', { text: value, email });
   }, 250)
+
+  setNewTextVal = (e) => {
+    this.setState({ text: e.target.value })
+  }
+
 
   setEditorSize = throttle(() => {
     this.editor.setSize(null, `${window.innerHeight - 80}px`);
