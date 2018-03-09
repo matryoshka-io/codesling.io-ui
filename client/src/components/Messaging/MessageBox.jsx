@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
+<<<<<<< HEAD
 import io from 'socket.io-client';
 import { uniq } from 'lodash';
 
 import Button from '../globals/Button'
+=======
+import io from 'socket.io-client/dist/socket.io.js';
+>>>>>>> [frontend] create message feature; currently rendering on codesling
 
 class MessageBox extends Component {
   constructor() {
