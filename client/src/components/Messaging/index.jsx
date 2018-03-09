@@ -1,17 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import MessageBox from './MessageBox.jsx';
 
-import MessageBox from './MessageBox.jsx'
-
-class Messaging extends Component {
+class ChatIndex extends Component {
   constructor(props) {
     super(props)
   }
   render() {
-    console.log('props from index', this.props)
     return (
       <div className="messaging">
         <div className="messageBox">
-          <MessageBox socket={this.props} />
+          <MessageBox socket={this.props.socket} />
         </div>
         <style>{`
         #text {
@@ -24,4 +22,4 @@ class Messaging extends Component {
   }
 }
 
-export default Messaging;
+export default ChatIndex;
