@@ -8,7 +8,6 @@ class MessageBox extends Component {
   constructor() {
     super();
     this.state = {
-      user: '',
       message: '',
       allChats: [],
     }
@@ -16,23 +15,11 @@ class MessageBox extends Component {
 
   componentDidMount() {
     let { socket } = this.props;
-<<<<<<< HEAD
     socket.on('connect', () => {
       socket.on('newMessage', newMessage => {
         let dataArr = [newMessage]
         this.setState({
           allChats: this.state.allChats.concat(dataArr),
-=======
-    console.log('this.props', this.props)
-    socket.on('connect', () => {
-      socket.on('newMessage', newMessage => {
-        console.log('newMsg', [newMessage])
-        let dataArr = [newMessage.messages]
-        console.log('dataArr', dataArr)
-        this.setState({
-          allChats: this.state.allChats.concat(dataArr),
-          user: newMessage.user,
->>>>>>> [msg] live update chat working properly now
         })
       })
     });
@@ -80,6 +67,14 @@ class MessageBox extends Component {
           height: 10px;
           font-size: 12px;
           padding: 15px 0px 15px 8px;;
+        }
+        .messageBox {
+          border-style: solid;
+          border-color: green;
+        }
+        .messaging {
+          border-style: solid;
+          border-color: pink;
         }
         .messaging-box {
           position: fixed;
