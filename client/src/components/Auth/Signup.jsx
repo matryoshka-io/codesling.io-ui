@@ -26,7 +26,7 @@ export default class Signup extends Component {
       username
     }
     try {
-      const data = await axios.post(`http://localhost:3396/api/auth/signup`, body);
+      const data = await axios.post(`${process.env.REACT_APP_REST_SERVER_URL}/auth/signup`, body);
       data ? this.props.history.push('/login') : this.props.history.push('/auth');
     } catch (err) {
       throw new Error(err);
@@ -48,13 +48,13 @@ export default class Signup extends Component {
             placeholder={'enter email'}
             onChange={this.handleInputChange}
             />
-          <Input 
+          <Input
             name='username'
             type='username'
             placeholder={'enter your username'}
             onChange={this.handleInputChange}
             />
-          <Input 
+          <Input
             name='password'
             type='password'
             placeholder={'enter your password'}

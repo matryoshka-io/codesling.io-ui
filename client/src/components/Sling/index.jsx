@@ -4,12 +4,12 @@ import io from 'socket.io-client/dist/socket.io.js';
 import Sling from './Sling.jsx';
 
 class SlingIndex extends Component {
-  state = { 
+  state = {
     socket: null,
    }
 
   componentWillMount() {
-    this.socket = io('http://localhost:4155', {
+    this.socket = io(`${process.env.REACT_APP_SOCKET_SERVER_URL}`, {
       query: {
         roomId: this.props.location.pathname.slice(1)
       }
