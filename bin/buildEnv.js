@@ -1,7 +1,15 @@
 const fs = require('fs');
 const _ = require('lodash');
 
-const envVariables = require('../config/.env');
+const config = require('../config/.env');
+const environment = process.argv[2]
+
+if (!config[environment]) {
+  console.log('Could not find a configuration for the environment provided');
+  process.exit(1);
+} else {
+  console.log(`ENV:  Building environment for ${environment}`)
+}
 
 const createENVFile = (directory, variables) => {
   _.each(variables, (variable) => {
@@ -10,7 +18,7 @@ const createENVFile = (directory, variables) => {
 }
 
 const buildEnv = () => {
-  _.each(envVariables, (value, key) => {
+  _.each(config[environment], (value, key) => {
     fs.writeFileSync(`./${key}/.env`, '')
     createENVFile(key, value);
   });

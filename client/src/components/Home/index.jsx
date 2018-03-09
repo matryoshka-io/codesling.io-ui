@@ -38,7 +38,7 @@ class Home extends Component {
       }
     });
   }
-  
+
   handleAddChallengeClick = () => {
     this.props.history.push('/addChallenge');
   }

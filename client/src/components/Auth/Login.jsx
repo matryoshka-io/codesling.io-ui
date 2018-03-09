@@ -51,7 +51,7 @@ export default class Login extends Component {
             placeholder={'enter email'}
             onChange={this.handleInputChange}
             />
-          <Input 
+          <Input
             name='password'
             type='password'
             placeholder={'enter your password'}
