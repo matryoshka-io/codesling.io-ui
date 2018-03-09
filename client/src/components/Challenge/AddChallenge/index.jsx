@@ -27,7 +27,7 @@ class AddChallenge extends Component {
       user_id: id,
       type: 0
     }
-    const result = await axios.post(`http://localhost:3396/api/challenges`, body);
+    const result = await axios.post('http://localhost:3396/api/challenges', body);
     this.props.history.push('/home');
   }
 
