@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import MessageBox from './MessageBox.jsx'
 
-class Messaging extends Component {
+class MessagingIndex extends Component {
   constructor(props) {
     super(props)
   }
@@ -21,4 +21,4 @@ class Messaging extends Component {
   }
 }
 
-export default ChatIndex;
+export default MessagingIndex;
