@@ -8,7 +8,10 @@ import Stdout from './StdOut/index.jsx';
 import EditorHeader from './EditorHeader';
 import Button from '../globals/Button';
 import MessagingIndex from '../Messaging/index.jsx'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8875df3d2e064c95a4af2ebe76fa4777131e7ec3
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -43,7 +46,6 @@ class Sling extends Component {
       socket.emit('client.ready', startChall);
 
     });
-
 
     socket.on('server.initialState', ({ id, text, challenge }) => {
       this.setState({
