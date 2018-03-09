@@ -25,6 +25,8 @@ class Sling extends Component {
       stdout: '',
       solvable: true,
       winner: '',
+      timeStarted: '', // hm...
+      timeTaken: '',
     };
   }
 
@@ -40,7 +42,8 @@ class Sling extends Component {
         id,
         ownerText: text,
         challengerText: text,
-        challenge
+        challenge,
+        timeStarted: new Date(),
       });
     });
 
@@ -57,9 +60,11 @@ class Sling extends Component {
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null;
       if (!solvable) {
+        const timeTaken = ((new Date()) - this.state.timeStarted) / 1000;
         this.setState({
           solvable,
-          stdout: `${email} solved the challenge!`,
+          timeTaken,
+          stdout: `${email} solved the challenge! He took ${timeTaken} seconds.`,
           winner: email,
         });
       }
@@ -76,7 +81,7 @@ class Sling extends Component {
       socket.emit('client.run', { text: ownerText, email, challengeId, });
     } else {
       this.setState({
-        stdout: `${this.state.winner} solved the challenge!
+        stdout: `${this.state.winner} solved the challenge! He took time ${this.state.timeTaken} seconds.
         This challenge has already been solved.`,
       });
     }
@@ -114,9 +119,8 @@ class Sling extends Component {
             />
         </div>
         <div className="stdout-container">
-            {this.state.challenge.title || this.props.challenge.title}
-            <br/>
-            {this.state.challenge.content || this.props.challenge.content}
+            <h5>{this.state.challenge.title || this.props.challenge.title}</h5>
+            <p>{this.state.challenge.content || this.props.challenge.content}</p>
           <Stdout text={this.state.stdout}/>
           <Button
             className="run-btn"

@@ -59,5 +59,6 @@ typings/
 .svg
 bundle.js
 bundle.js.map
+.env.js
 
 graveyard.js
