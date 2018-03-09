@@ -8,9 +8,7 @@ class ChatIndex extends Component {
   render() {
     return (
       <div className="messaging">
-        <div className="messageBox">
-          <MessageBox socket={this.props.socket} />
-        </div>
+        <MessageBox socket={this.props.socket} />
         <style>{`
         #text {
           width: 225px;
