@@ -1,5 +1,5 @@
 module.exports = {
-  'development': {
+  development: {
     'server': ["PORT=1337"],
     'client': [
       "NODE_ENV=DEVELOPMENT",
@@ -12,7 +12,7 @@ module.exports = {
       "REACT_APP_REST_SERVER_URL=http://localhost:4990"
     ]
   },
-  'production': {
+  production: {
     'server': ["PORT=1337"],
     'client': [
       "NODE_ENV=PRODUCTION",
