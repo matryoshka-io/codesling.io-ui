@@ -109,7 +109,7 @@ class Sling extends Component {
             color="white"
             onClick={() => this.submitCode()}
           />
-          <MessagingIndex />
+          <MessagingIndex socket={this.props.socket} />
         </div>
         <div className="code2-editor-container">
           <CodeMirror
