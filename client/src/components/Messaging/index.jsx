@@ -8,7 +8,13 @@ class ChatIndex extends Component {
   render() {
     return (
       <div className="messaging">
+<<<<<<< HEAD
         <MessageBox socket={this.props.socket} />
+=======
+        <div className="messageBox">
+          <MessageBox socket={this.props.socket} />
+        </div>
+>>>>>>> [msg] live update chat working properly now
         <style>{`
         #text {
           width: 225px;
@@ -20,4 +26,8 @@ class ChatIndex extends Component {
   }
 }
 
+<<<<<<< HEAD
 export default ChatIndex;
+=======
+export default ChatIndex;
+>>>>>>> [msg] live update chat working properly now

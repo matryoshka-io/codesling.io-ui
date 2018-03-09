@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client';
+import { uniq } from 'lodash';
 
 import Button from '../globals/Button'
 
@@ -15,11 +16,23 @@ class MessageBox extends Component {
 
   componentDidMount() {
     let { socket } = this.props;
+<<<<<<< HEAD
     socket.on('connect', () => {
       socket.on('newMessage', newMessage => {
         let dataArr = [newMessage]
         this.setState({
           allChats: this.state.allChats.concat(dataArr),
+=======
+    console.log('this.props', this.props)
+    socket.on('connect', () => {
+      socket.on('newMessage', newMessage => {
+        console.log('newMsg', [newMessage])
+        let dataArr = [newMessage.messages]
+        console.log('dataArr', dataArr)
+        this.setState({
+          allChats: this.state.allChats.concat(dataArr),
+          user: newMessage.user,
+>>>>>>> [msg] live update chat working properly now
         })
       })
     });
@@ -40,6 +53,7 @@ class MessageBox extends Component {
   }
 
   render() {
+    console.log('this.state.allChats', this.state.allChats)
     return (
       <div className="messaging-box">
         <div className="display-message">
