@@ -15,7 +15,7 @@ class Challenge extends Component {
 
   fetchAllChallenges = async () => {
     const id = localStorage.getItem('id');
-    const { data } = await axios.get(`${process.env.REACT_APP_REST_SERVER_URL}/usersChallenges/${id}`)
+    const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`)
     this.setState({ challenges: data.rows });
   }
 

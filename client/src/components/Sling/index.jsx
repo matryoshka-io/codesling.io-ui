@@ -9,7 +9,7 @@ class SlingIndex extends Component {
    }
 
   componentWillMount() {
-    this.socket = io(`${process.env.REACT_APP_SOCKET_SERVER_URL}`, {
+    this.socket = io('http://localhost:4155/', {
       query: {
         roomId: this.props.location.pathname.slice(1)
       }
