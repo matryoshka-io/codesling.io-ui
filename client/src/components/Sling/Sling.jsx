@@ -12,6 +12,8 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/base16-dark.css';
 import './Sling.css';
 
+import MessagingIndex from '../Messaging/index.jsx'; // eslint-disable-line
+
 import Stdout from './StdOut/index.jsx'; // eslint-disable-line
 import EditorHeader from './EditorHeader';
 import Button from '../globals/Button';
@@ -54,10 +56,10 @@ class Sling extends Component {
       }
     });
 
-    socket.on('server.run', ({ stdout, email, solvable, timeStarted }) => {
+    socket.on('server.run', ({ stdout, email, solvable, timeStarted }) => { // eslint-disable-line
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null; // eslint-disable-line
-      console.log(timeStarted);
+      // console.log(timeStarted);
       if (!solvable) {
         const timeTaken = ((new Date()) - (new Date(timeStarted))) / 1000;
         this.setState({
@@ -128,6 +130,7 @@ class Sling extends Component {
             color="white"
             onClick={() => this.submitCode()}
           />
+          <MessagingIndex socket={this.props.socket} />
         </div>
         <div className="code2-editor-container">
           <CodeMirror

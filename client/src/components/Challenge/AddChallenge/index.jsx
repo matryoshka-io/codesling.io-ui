@@ -8,7 +8,7 @@ import Logo from '../../globals/Logo';
 import './Auth.css';
 
 class AddChallenge extends Component {
-  state = { 
+  state = {
     title: '',
     content: '',
     testCase: '',
@@ -55,7 +55,7 @@ class AddChallenge extends Component {
             placeholder={'enter content'}
             onChange={this.handleChallengeInput}
             />
-          <Input 
+          <Input
             name='difficulty'
             type='difficulty'
             placeholder={'enter your difficulty'}

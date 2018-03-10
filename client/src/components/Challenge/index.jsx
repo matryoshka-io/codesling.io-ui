@@ -8,7 +8,7 @@ class Challenge extends Component {
   state = {
     challenges: []
    }
-  
+
   componentDidMount() {
     this.fetchAllChallenges();
   }
