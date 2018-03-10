@@ -8,9 +8,7 @@ class MessagingIndex extends Component {
   }
   render() {
     return (
-      // <div className="messaging">
         <MessageBox socket={this.props.socket} />
-      // </di?v>
     )
   }
 }
