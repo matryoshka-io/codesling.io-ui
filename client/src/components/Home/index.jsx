@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import randomstring from 'randomstring';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import Button from '../globals/Button';
-import Logo from '../globals/Logo';
+import Nav from '../globals/Nav';
+import Users from '../Users';
+import Friends from '../Friends';
 
 import './LandingPage.css';
 
@@ -14,6 +17,8 @@ let slingId;
 
 class Home extends Component {
   state = {
+    allUsers: [],
+    allFriends: [],
     allChallenges: [],
     selectedChallenge: {},
   };
@@ -22,7 +27,15 @@ class Home extends Component {
     const id = localStorage.getItem('id');
     const { data } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/usersChallenges/${id}`);
     const { data: { clout } } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/users/user/${id}/clout`);
+    const users = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/users/fetchAllUsers`);
+    const friends = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/friends/fetchAllFriends/${id}`);
+
+    if (users) {
+      this.setState({ allUsers: users.data.rows }); // eslint-disable-line
+    }
+
     this.setState({ // eslint-disable-line
+      allFriends: friends.data,
       allChallenges: data.rows,
       clout,
     });
@@ -52,13 +65,46 @@ class Home extends Component {
     this.setState({ selectedChallenge: value });
   }
 
+  handleUserSelect = (e) => {
+    e.preventDefault();
+    const { value } = e.target;
+    this.setState({ selectedUser: JSON.parse(value) }); // eslint-disable-line
+  }
+
+  handleFriendSelect = (e) => {
+    e.preventDefault();
+    const { value } = e.target;
+    this.setState({ selectedFriend: value }); // eslint-disable-line
+  }
+
+  handleShowUsers = () => {
+    this.setState({ render: 'users' });
+  }
+
+  handleShowFriends = () => {
+    this.setState({ render: 'friends' });
+  }
+
+
+  handleAddFriendClick = async (user) => {
+    try {
+      await axios.post(
+        'http://localhost:3396/api/friends/addFriend',
+        { user_id: localStorage.getItem('id'), friend_id: user.id },
+      );
+      this.setState({
+        allFriends: [...this.state.allFriends, user],
+      });
+    } catch (err) {
+      // alert('Failed to add friend.');
+    }
+  }
+
   render() {
     return (
       <div className="landing-page-container">
-        <Logo
-          className="landing-page-logo"
-        />
-        <br />
+        <p> Codesling.io</p>
+        <Nav handleShowUsers={this.handleShowUsers} handleShowFriends={this.handleShowFriends} />
         <p>Your clout: {this.state.clout}</p>
         <select onChange={e => this.handleChallengeSelect(e)}>
           {this.state.allChallenges.map((challenge, index) => (
@@ -72,6 +118,7 @@ class Home extends Component {
         </select>
         <br />
         <br />
+
         <Button
           backgroundColor="red"
           color="white"
@@ -85,6 +132,8 @@ class Home extends Component {
           text="Duel"
           onClick={() => this.handleDuelClick()}
         />
+        {this.state.render === 'users' && <Users allUsers={this.state.allUsers} handleAddFriendClick={this.handleAddFriendClick} />}
+        {this.state.render === 'friends' && <Friends allFriends={this.state.allFriends} />}
       </div>
     );
   }
