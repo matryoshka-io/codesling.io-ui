@@ -1,28 +1,29 @@
+/* globals window, localStorage */
+
 import React, { Component } from 'react';
 import CodeMirror from 'react-codemirror2';
-import io from 'socket.io-client/dist/socket.io.js';
-import axios from 'axios';
+// import io from 'socket.io-client/dist/socket.io';
+// import axios from 'axios';
 import { throttle } from 'lodash';
+import PropTypes from 'prop-types';
 
-import Stdout from './StdOut/index.jsx';
-import EditorHeader from './EditorHeader';
-import Button from '../globals/Button';
-import MessagingIndex from '../Messaging/index.jsx'
-
-import 'codemirror/mode/javascript/javascript.js';
+import 'codemirror/mode/javascript/javascript';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/base16-dark.css';
 import './Sling.css';
+
+import MessagingIndex from '../Messaging/index.jsx'; // eslint-disable-line
+
+import Stdout from './StdOut/index.jsx'; // eslint-disable-line
+import EditorHeader from './EditorHeader';
+import Button from '../globals/Button';
 
 class Sling extends Component {
   constructor() {
     super();
     this.state = {
-      id: null,
-      ownerText: null,
       challengerText: null,
-      text: '',
-      challenge: '',
+      challenge: {},
       stdout: '',
       solvable: true,
       winner: '',
@@ -33,14 +34,13 @@ class Sling extends Component {
 
   componentDidMount() {
     const { socket, challenge } = this.props;
-    const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {}
+    const startChall = typeof challenge === 'string' ? JSON.parse(challenge) : {};
     socket.on('connect', () => {
       socket.emit('client.ready', startChall);
     });
-    
-    socket.on('server.initialState', ({ id, text, challenge }) => {
+
+    socket.on('server.initialState', ({ text, challenge }) => { // eslint-disable-line
       this.setState({
-        id,
         ownerText: text,
         challengerText: text,
         challenge,
@@ -56,11 +56,11 @@ class Sling extends Component {
       }
     });
 
-    socket.on('server.run', ({ stdout, email, solvable }) => {
+    socket.on('server.run', ({ stdout, email, solvable, timeStarted }) => { // eslint-disable-line
       const ownerEmail = localStorage.getItem('email');
-      email === ownerEmail ? this.setState({ stdout }) : null;
+      email === ownerEmail ? this.setState({ stdout }) : null; // eslint-disable-line
       if (!solvable) {
-        const timeTaken = ((new Date()) - this.state.timeStarted) / 1000;
+        const timeTaken = ((new Date()) - (new Date(timeStarted))) / 1000;
         this.setState({
           solvable,
           timeTaken,
@@ -73,12 +73,16 @@ class Sling extends Component {
     window.addEventListener('resize', this.setEditorSize);
   }
 
+  setEditorSize = throttle(() => {
+    this.editor.setSize(null, `${window.innerHeight - 80}px`);
+  }, 100);
+
   submitCode = () => {
     if (this.state.solvable) {
       const { socket } = this.props;
-      const { ownerText, challenge: { id: challengeId } } = this.state;
+      const { ownerText, timeStarted, challenge: { id: challengeId } } = this.state;
       const email = localStorage.getItem('email');
-      socket.emit('client.run', { text: ownerText, email, challengeId, });
+      socket.emit('client.run', { text: ownerText, email, challengeId, timeStarted }); // eslint-disable-line
     } else {
       this.setState({
         stdout: `${this.state.winner} solved the challenge! He took time ${this.state.timeTaken} seconds.
@@ -92,17 +96,13 @@ class Sling extends Component {
     this.props.socket.emit('client.update', { text: value, email });
   }, 250)
 
-  setEditorSize = throttle(() => {
-    this.editor.setSize(null, `${window.innerHeight - 80}px`);
-  }, 100);
-
   initializeEditor = (editor) => {
     this.editor = editor;
     this.setEditorSize();
   }
 
   render() {
-    const { socket } = this.props;
+    // const { socket } = this.props;
     return (
       <div className="sling-container">
         <EditorHeader />
@@ -116,12 +116,12 @@ class Sling extends Component {
               theme: 'base16-dark',
             }}
             onChange={this.handleChange}
-            />
+          />
         </div>
         <div className="stdout-container">
-            <h5>{this.state.challenge.title || this.props.challenge.title}</h5>
-            <p>{this.state.challenge.content || this.props.challenge.content}</p>
-          <Stdout text={this.state.stdout}/>
+          <h5>{this.state.challenge.title || this.props.challenge.title}</h5>
+          <p>{this.state.challenge.content || this.props.challenge.content}</p>
+          <Stdout text={this.state.stdout} />
           <Button
             className="run-btn"
             text="Run Code"
@@ -132,7 +132,7 @@ class Sling extends Component {
           <MessagingIndex socket={this.props.socket} />
         </div>
         <div className="code2-editor-container">
-          <CodeMirror 
+          <CodeMirror
             editorDidMount={this.initializeEditor}
             value={this.state.challengerText}
             options={{
@@ -144,8 +144,13 @@ class Sling extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
+
+Sling.propTypes = {
+  challenge: PropTypes.string.isRequired, // eslint-disable-line
+  socket: PropTypes.object.isRequired, // eslint-disable-line
+};
 
 export default Sling;
