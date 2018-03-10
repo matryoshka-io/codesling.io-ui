@@ -6,7 +6,7 @@ import Button from '../globals/Button/';
 
 import './Auth.css';
 
-const { REACT_REST_SERVER_URL } = process.env;
+const { REACT_APP_REST_SERVER_URL } = process.env;
 
 export default class Signup extends Component {
   constructor() {
@@ -28,7 +28,7 @@ export default class Signup extends Component {
       username
     }
     try {
-      const data = await axios.post(`${REACT_REST_SERVER_URL}/api/auth/signup`, body);
+      const data = await axios.post(`${REACT_APP_REST_SERVER_URL}/api/auth/signup`, body);
       data ? this.props.history.push('/login') : this.props.history.push('/auth');
     } catch (err) {
       throw new Error(err);

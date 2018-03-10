@@ -3,7 +3,7 @@ import io from 'socket.io-client/dist/socket.io.js';
 
 import Sling from './Sling.jsx';
 
-const { REACT_SOCKET_SERVER_URL } = process.env;
+const { REACT_APP_SOCKET_SERVER_URL } = process.env;
 
 class SlingIndex extends Component {
   state = {
@@ -11,7 +11,7 @@ class SlingIndex extends Component {
    }
 
   componentWillMount() {
-    this.socket = io(REACT_SOCKET_SERVER_URL, {
+    this.socket = io(REACT_APP_SOCKET_SERVER_URL, {
       query: {
         roomId: this.props.location.pathname.slice(1)
       }

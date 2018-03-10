@@ -18,11 +18,11 @@ const envBuild = {
       "NODE_ENV=production",
       "DEBUG=FALSE",
       "ENVPREFIX=REACT_APP_",
-      "REST_SERVER_URL=http://localhost:3396",
-      "SOCKET_SERVER_URL=http://localhost:4155",
-      "CODERUNNER_SERVICE_URL=http://localhost:4000",
-      "REACT_APP_SOCKET_SERVER_URL=http://localhost:4155",
-      "REACT_APP_REST_SERVER_URL=http://localhost:3396"
+      "REST_SERVER_URL=https://codesling.fun/rest",
+      "SOCKET_SERVER_URL=https://codesling.fun/sockets",
+      "CODERUNNER_SERVICE_URL=https://codesling.fun/coderunner",
+      "REACT_APP_SOCKET_SERVER_URL=https://codesling.fun/sockets",
+      "REACT_APP_REST_SERVER_URL=https://codesling.fun/rest"
     ]
   }
 };

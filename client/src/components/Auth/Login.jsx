@@ -6,7 +6,7 @@ import Button from '../globals/Button/';
 
 import './Auth.css';
 
-const { REACT_REST_SERVER_URL } = process.env;
+const { REACT_APP_REST_SERVER_URL } = process.env;
 
 export default class Login extends Component {
   constructor() {
@@ -28,7 +28,7 @@ export default class Login extends Component {
       username
     }
     try {
-      const data = await axios.post(`${REACT_REST_SERVER_URL}/api/auth/login`, body);
+      const data = await axios.post(`${REACT_APP_REST_SERVER_URL}/api/auth/login`, body);
       localStorage.setItem('email', data.data.email)
       localStorage.setItem('id', data.data.id)
       localStorage.setItem('token', data.data.token.accessToken)

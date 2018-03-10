@@ -7,7 +7,7 @@ import Logo from '../globals/Logo';
 
 import './LandingPage.css';
 
-const { REACT_REST_SERVER_URL } = process.env;
+const { REACT_APP_REST_SERVER_URL } = process.env;
 
 let slingId;
 
@@ -19,8 +19,8 @@ class Home extends Component {
 
    async componentDidMount() {
     const id = localStorage.getItem('id');
-    const { data } = await axios.get(`${REACT_REST_SERVER_URL}/api/usersChallenges/${id}`);
-    const { data: { clout } } = await axios.get(`${REACT_REST_SERVER_URL}/api/users/user/${id}/clout`);
+    const { data } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/usersChallenges/${id}`);
+    const { data: { clout } } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/users/user/${id}/clout`);
     this.setState({
       allChallenges: data.rows,
       clout,

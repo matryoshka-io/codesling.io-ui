@@ -7,7 +7,7 @@ import Logo from '../../globals/Logo';
 
 import './Auth.css';
 
-const { REACT_REST_SERVER_URL } = process.env;
+const { REACT_APP_REST_SERVER_URL } = process.env;
 
 class AddChallenge extends Component {
   state = {
@@ -29,7 +29,7 @@ class AddChallenge extends Component {
       user_id: id,
       type: 0
     }
-    const result = await axios.post(`${REACT_REST_SERVER_URL}/api/challenges`, body);
+    const result = await axios.post(`${REACT_APP_REST_SERVER_URL}/api/challenges`, body);
     this.props.history.push('/home');
   }
 
