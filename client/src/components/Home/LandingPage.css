@@ -1,5 +1,5 @@
 .landing-page-container {
-  text-align: center; }
+  text-align: center; } 
 
 .landing-page-logo {
   width: 300px;
@@ -10,3 +10,12 @@
   @media (min-width: 480px) {
     .auth-btn-container button {
       min-width: 300px; } }
+
+.navBar {
+  height: 80px;
+  background-color: #c24040;
+}
+
+.navButton {
+  display: inline;
+}
