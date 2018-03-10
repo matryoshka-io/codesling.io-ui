@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import randomstring from 'randomstring';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import Button from '../globals/Button';
 import Logo from '../globals/Logo';
@@ -12,18 +13,18 @@ let slingId;
 class Home extends Component {
   state = {
     allChallenges: [],
-    selectedChallenge: {}
-   }
+    selectedChallenge: {},
+  };
 
-   async componentDidMount() {
+  async componentDidMount() {
     const id = localStorage.getItem('id');
     const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`);
     const { data: { clout } } = await axios.get(`http://localhost:3396/api/users/user/${id}/clout`);
-    this.setState({
+    this.setState({ // eslint-disable-line
       allChallenges: data.rows,
       clout,
     });
-   }
+  }
 
   randomSlingId = () => {
     slingId = `${randomstring.generate()}`;
@@ -34,11 +35,11 @@ class Home extends Component {
     this.props.history.push({
       pathname: `/${slingId}`,
       state: {
-        challenge: this.state.selectedChallenge
-      }
+        challenge: this.state.selectedChallenge,
+      },
     });
   }
-  
+
   handleAddChallengeClick = () => {
     this.props.history.push('/addChallenge');
   }
@@ -57,16 +58,14 @@ class Home extends Component {
         />
         <br />
         <p>Your clout: {this.state.clout}</p>
-        <select onChange={(e) => this.handleChallengeSelect(e)}>
-          {this.state.allChallenges.map(challenge => {
-            return (
+        <select onChange={e => this.handleChallengeSelect(e)}>
+          {this.state.allChallenges.map(challenge => (
             <option
               value={JSON.stringify(challenge)}
             >
               {challenge.title}
-            </option>)
-          }
-          )}
+            </option>
+          ))}
         </select>
         <br />
         <br />
@@ -87,5 +86,9 @@ class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  history: PropTypes.array.isRequired, // eslint-disable-line
+};
 
 export default Home;
