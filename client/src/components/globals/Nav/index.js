@@ -21,7 +21,7 @@ export default ({handleShowUsers, handleShowFriends}) => (
             backgroundColor="red"
             color="white"
             text="Friends"
-            onClick={() => handleShowFriends}>
+            onClick={() => handleShowFriends()}>
           </Button>
     <style> 
       {`

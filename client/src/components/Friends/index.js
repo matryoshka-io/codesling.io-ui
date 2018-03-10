@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Button from '../globals/Button';
 
-export default ({allUsers, handleAddFriendClick}) => (
-  <div>
-      {allUsers.map( (user, i) => {
+export default ({allFriends}) => (
+    <div>
+    
+      
+      {allFriends.map( (user, i) => {
           return (
-              <p><button className="addFriend" >
+              <p><button className="removeFriend">
                 {user.id} {user.username} 
               </button></p>
           )
       })}
-      {console.log(allUsers)}
       <style>
           {`
             
-            .addFriend {
-                background-color: red;
+            .removeFriend {
+                background-color: #c24040;
             }
           `}
       </style>

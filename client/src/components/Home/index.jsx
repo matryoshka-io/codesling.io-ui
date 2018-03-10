@@ -19,11 +19,10 @@ class Home extends Component {
     allUsers: [],
     allFriends: [],
     selectedFriend: {},
+    selectedUser: [],
     allChallenges: [],
     selectedChallenge: {}
    }
-
-  //  this.handleShowUsers = this.handleShowUsers.bind(this)
 
    async componentDidMount() {
     const id = localStorage.getItem('id');
@@ -37,6 +36,7 @@ class Home extends Component {
     }
 
     this.setState({
+      allFriends: friends.data,
       allChallenges: data.rows,
       clout,
     });
@@ -66,17 +66,18 @@ class Home extends Component {
     this.setState({ selectedChallenge: value });
   }
   
-  // handleUserSelect = (e) => {
-  //   e.preventDefault();
-  //   const { value } = e.target;
-  //   this.setState({ selectedUser: JSON.parse(value) });
-  // }
+  handleUserSelect = (e) => {
+    e.preventDefault();
+    const { value } = e.target;
+    this.setState({ selectedUser: JSON.parse(value) });
+  }
 
-  // handleFriendSelect = (e) => {
-  //   e.preventDefault();
-  //   const { value } = e.target;
-  //   this.setState({ selectedFriend: value });
-  // }
+  handleFriendSelect = (e) => {
+    e.preventDefault();
+    const { value } = e.target;
+    this.setState({ selectedFriend: value });
+  }
+  
   handleShowUsers = () => {
     this.setState({ render: 'users' });
    }
@@ -86,19 +87,19 @@ class Home extends Component {
   }
 
 
-  handleAddFriendClick = async () => {
-    console.log('friend added')
+  handleAddFriendClick = async (user) => {
     try {
+      console.log(localStorage.getItem('id'));
       await axios.post('http://localhost:3396/api/friends/addFriend',
-        { user_id: localStorage.getItem('id'), friend_id: this.state.selectedUser.id }
+        { user_id: localStorage.getItem('id'), friend_id: user.id }
       );
       
       let friends = this.state.allFriends;
-      friends.push(this.state.selectedUser);
       
       this.setState({
-        allFriends: friends
+        allFriends: [...this.state.allFriends, user]
       });
+      console.log(this.state.allFriends)
     } catch (err) {
       alert('Failed to add friend.');
     }
@@ -110,35 +111,6 @@ class Home extends Component {
       <div className="landing-page-container">
         <p> Codesling.io</p>
         <Nav handleShowUsers={this.handleShowUsers} handleShowFriends={this.handleShowFriends}/>
-         
-        {/* <div className="navBar">
-          <Logo
-            className="landing-page-logo"
-          />
-          <Button 
-            className="navButton"
-            backgroundColor="red"
-            color="white"
-            text="Users">
-          </Button>
-          <Button 
-            className="navButton"
-            backgroundColor="red"
-            color="white"
-            text="Friends"
-            onClick={() => this.handleShowFriends}>
-          </Button>
-        </div> */}
-        {/* <p>users: </p>
-        {console.log(this.state.allUsers)}
-        <select>
-          {this.state.allUsers.map(user => {
-            console.log(user)
-            // return (
-            //   <option>{user.username}</option>
-            // )
-          })}
-        </select>
         <p>Your clout: {this.state.clout}</p>
         <select onChange={(e) => this.handleChallengeSelect(e)}>
           {this.state.allChallenges.map(challenge => {
@@ -151,7 +123,7 @@ class Home extends Component {
           }
           )}
         </select>
-        <br /> */}
+        <br /> 
         <br />
 
         <Button
@@ -167,11 +139,6 @@ class Home extends Component {
           text="Duel"
           onClick={() => this.handleDuelClick()}
         />
-        {/* <Router>
-          <Switch>
-            <Route path="/home/users" component={Users}/>
-          </Switch>
-        </Router> */}
         {this.state.render === 'users' && <Users allUsers={this.state.allUsers} handleAddFriendClick={this.handleAddFriendClick}/>}
         {this.state.render === 'friends' && <Friends allFriends={this.state.allFriends} />}
       </div>

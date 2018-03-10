@@ -6,12 +6,11 @@ export default ({allUsers, handleAddFriendClick}) => (
   <div>
       {allUsers.map( (user, i) => {
           return (
-              <p><button className="addFriend" onClick={ () => handleAddFriendClick()}>
+              <p><button className="addFriend" key={i} onClick={ () => handleAddFriendClick(user)}>
                 {user.id} {user.username} 
               </button></p>
           )
       })}
-      {console.log(allUsers)}
       <style>
           {`
             
