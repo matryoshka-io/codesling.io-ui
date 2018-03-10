@@ -54,11 +54,12 @@ class Sling extends Component {
       }
     });
 
-    socket.on('server.run', ({ stdout, email, solvable }) => {
+    socket.on('server.run', ({ stdout, email, solvable, timeStarted }) => {
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null; // eslint-disable-line
+      console.log(timeStarted);
       if (!solvable) {
-        const timeTaken = ((new Date()) - this.state.timeStarted) / 1000;
+        const timeTaken = ((new Date()) - (new Date(timeStarted))) / 1000;
         this.setState({
           solvable,
           timeTaken,
@@ -78,9 +79,9 @@ class Sling extends Component {
   submitCode = () => {
     if (this.state.solvable) {
       const { socket } = this.props;
-      const { ownerText, challenge: { id: challengeId } } = this.state;
+      const { ownerText, timeStarted, challenge: { id: challengeId } } = this.state;
       const email = localStorage.getItem('email');
-      socket.emit('client.run', { text: ownerText, email, challengeId });
+      socket.emit('client.run', { text: ownerText, email, challengeId, timeStarted }); // eslint-disable-line
     } else {
       this.setState({
         stdout: `${this.state.winner} solved the challenge! He took time ${this.state.timeTaken} seconds.
