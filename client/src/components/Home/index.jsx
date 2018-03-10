@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import randomstring from 'randomstring';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import Button from '../globals/Button';
 import Logo from '../globals/Logo';
@@ -21,10 +22,10 @@ class Home extends Component {
     selectedFriend: {},
     selectedUser: [],
     allChallenges: [],
-    selectedChallenge: {}
-   }
+    selectedChallenge: {},
+  };
 
-   async componentDidMount() {
+  async componentDidMount() {
     const id = localStorage.getItem('id');
     const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`);
     const { data: { clout } } = await axios.get(`http://localhost:3396/api/users/user/${id}/clout`);
@@ -40,7 +41,7 @@ class Home extends Component {
       allChallenges: data.rows,
       clout,
     });
-   }
+  }
 
   randomSlingId = () => {
     slingId = `${randomstring.generate()}`;
@@ -51,8 +52,8 @@ class Home extends Component {
     this.props.history.push({
       pathname: `/${slingId}`,
       state: {
-        challenge: this.state.selectedChallenge
-      }
+        challenge: this.state.selectedChallenge,
+      },
     });
   }
 
@@ -112,16 +113,15 @@ class Home extends Component {
         <p> Codesling.io</p>
         <Nav handleShowUsers={this.handleShowUsers} handleShowFriends={this.handleShowFriends}/>
         <p>Your clout: {this.state.clout}</p>
-        <select onChange={(e) => this.handleChallengeSelect(e)}>
-          {this.state.allChallenges.map(challenge => {
-            return (
+        <select onChange={e => this.handleChallengeSelect(e)}>
+          {this.state.allChallenges.map((challenge, index) => (
             <option
+              key={index} // eslint-disable-line
               value={JSON.stringify(challenge)}
             >
               {challenge.title}
-            </option>)
-          }
-          )}
+            </option>
+          ))}
         </select>
         <br /> 
         <br />
@@ -145,5 +145,9 @@ class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  history: PropTypes.object.isRequired, // eslint-disable-line
+};
 
 export default Home;
