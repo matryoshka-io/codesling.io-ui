@@ -36,20 +36,20 @@ class MessageBox extends Component {
   sendMessage = () => {
     const { socket } = this.props;
     const ownerEmail = localStorage.getItem('email');
-    socket.emit('client.chat', { user: ownerEmail, messages: this.state.message })
+    socket.emit('client.chat', { user: ownerEmail, messages: this.state.message });
   }
 
   render() {
     return (
-      <div class="container">
+      <div className="container">
         Say something to your opponent
-      <div className="messageView">
-        {this.state.allChats.map((chat, index) => (
-          <div key={index} /* eslint-disable-line */ >
-            {chat.user} {chat.messages}
-          </div>
-        ))}
-      </div>
+        <div className="messageView">
+          {this.state.allChats.map((chat, index) => (
+            <div key={index} /* eslint-disable-line */ >
+              {chat.user} {chat.messages}
+            </div>
+          ))}
+        </div>
         <div className="messaging-box">
           <div className="message-bar">
             <input id="text" type="text" onChange={e => this.onTextChangeHandler(e)} />
