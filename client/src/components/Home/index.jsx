@@ -30,6 +30,7 @@ class Home extends Component {
     const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`);
     const { data: { clout } } = await axios.get(`http://localhost:3396/api/users/user/${id}/clout`);
     const users = await axios.get(`http://localhost:3396/api/users/fetchAllUsers`);
+    const friends = await axios.get(`http://localhost:3396/api/friends/fetchAllFriends/${id}`);
     
     if(users){
       this.setState({allUsers: users.data.rows})
@@ -86,6 +87,7 @@ class Home extends Component {
 
 
   handleAddFriendClick = async () => {
+    console.log('friend added')
     try {
       await axios.post('http://localhost:3396/api/friends/addFriend',
         { user_id: localStorage.getItem('id'), friend_id: this.state.selectedUser.id }
@@ -170,7 +172,7 @@ class Home extends Component {
             <Route path="/home/users" component={Users}/>
           </Switch>
         </Router> */}
-        {this.state.render === 'users' && <Users allUsers={this.state.allUsers} />}
+        {this.state.render === 'users' && <Users allUsers={this.state.allUsers} handleAddFriendClick={this.handleAddFriendClick}/>}
         {this.state.render === 'friends' && <Friends allFriends={this.state.allFriends} />}
       </div>
     );
