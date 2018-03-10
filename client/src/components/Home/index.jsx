@@ -12,6 +12,7 @@ import Friends from '../Friends';
 
 import './LandingPage.css';
 
+const { REACT_APP_REST_SERVER_URL } = process.env;
 
 let slingId;
 
@@ -27,10 +28,10 @@ class Home extends Component {
 
   async componentDidMount() {
     const id = localStorage.getItem('id');
-    const { data } = await axios.get(`http://localhost:3396/api/usersChallenges/${id}`);
-    const { data: { clout } } = await axios.get(`http://localhost:3396/api/users/user/${id}/clout`);
-    const users = await axios.get(`http://localhost:3396/api/users/fetchAllUsers`);
-    const friends = await axios.get(`http://localhost:3396/api/friends/fetchAllFriends/${id}`);
+    const { data } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/usersChallenges/${id}`);
+    const { data: { clout } } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/users/user/${id}/clout`);
+    const users = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/users/fetchAllUsers`);
+    const friends = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/friends/fetchAllFriends/${id}`);
     
     if(users){
       this.setState({allUsers: users.data.rows})
