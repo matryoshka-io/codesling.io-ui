@@ -26,7 +26,11 @@
   grid-area: code2; }
 
 .stdout-container {
-  grid-area: stdout; }
+  grid-area: stdout;
+  max-height: 400px;
+  float:left;
+  overflow-y: auto;
+  font-size: 12px; }
 
 .editor-header {
   grid-area: header; }
