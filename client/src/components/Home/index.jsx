@@ -22,7 +22,7 @@ class Home extends Component {
     const id = localStorage.getItem('id');
     const { data } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/usersChallenges/${id}`);
     const { data: { clout } } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/users/user/${id}/clout`);
-    this.setState({
+    this.setState({ // eslint-disable-line
       allChallenges: data.rows,
       clout,
     });
