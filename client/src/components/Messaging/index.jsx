@@ -1,16 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import MessageBox from './MessageBox.jsx'
+import MessageBox from './MessageBox.jsx' // eslint-disable-line
 
-class MessagingIndex extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    return (
-        <MessageBox socket={this.props.socket} />
-    )
-  }
-}
+const MessagingIndex = props => <MessageBox socket={props.socket} />;
+
+MessagingIndex.propTypes = {
+  socket: PropTypes.object.isRequired, // eslint-disable-line
+};
 
 export default MessagingIndex;

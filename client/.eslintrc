@@ -1,0 +1,7 @@
+{
+  "parser": "babel-eslint",
+  "globals": {
+    "localStorage": false,
+    "window": false
+  }
+}
