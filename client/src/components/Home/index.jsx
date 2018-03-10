@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import randomstring from 'randomstring';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import Button from '../globals/Button';
-import Logo from '../globals/Logo';
 import Nav from '../globals/Nav';
 import Users from '../Users';
 import Friends from '../Friends';
@@ -20,8 +19,6 @@ class Home extends Component {
   state = {
     allUsers: [],
     allFriends: [],
-    selectedFriend: {},
-    selectedUser: [],
     allChallenges: [],
     selectedChallenge: {},
   };
@@ -32,12 +29,12 @@ class Home extends Component {
     const { data: { clout } } = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/users/user/${id}/clout`);
     const users = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/users/fetchAllUsers`);
     const friends = await axios.get(`${REACT_APP_REST_SERVER_URL}/api/friends/fetchAllFriends/${id}`);
-    
-    if(users){
-      this.setState({allUsers: users.data.rows})
+
+    if (users) {
+      this.setState({ allUsers: users.data.rows }); // eslint-disable-line
     }
 
-    this.setState({
+    this.setState({ // eslint-disable-line
       allFriends: friends.data,
       allChallenges: data.rows,
       clout,
@@ -67,22 +64,22 @@ class Home extends Component {
     const { value } = e.target;
     this.setState({ selectedChallenge: value });
   }
-  
+
   handleUserSelect = (e) => {
     e.preventDefault();
     const { value } = e.target;
-    this.setState({ selectedUser: JSON.parse(value) });
+    this.setState({ selectedUser: JSON.parse(value) }); // eslint-disable-line
   }
 
   handleFriendSelect = (e) => {
     e.preventDefault();
     const { value } = e.target;
-    this.setState({ selectedFriend: value });
+    this.setState({ selectedFriend: value }); // eslint-disable-line
   }
-  
+
   handleShowUsers = () => {
     this.setState({ render: 'users' });
-   }
+  }
 
   handleShowFriends = () => {
     this.setState({ render: 'friends' });
@@ -91,28 +88,23 @@ class Home extends Component {
 
   handleAddFriendClick = async (user) => {
     try {
-      console.log(localStorage.getItem('id'));
-      await axios.post('http://localhost:3396/api/friends/addFriend',
-        { user_id: localStorage.getItem('id'), friend_id: user.id }
+      await axios.post(
+        'http://localhost:3396/api/friends/addFriend',
+        { user_id: localStorage.getItem('id'), friend_id: user.id },
       );
-      
-      let friends = this.state.allFriends;
-      
       this.setState({
-        allFriends: [...this.state.allFriends, user]
+        allFriends: [...this.state.allFriends, user],
       });
-      console.log(this.state.allFriends)
     } catch (err) {
-      alert('Failed to add friend.');
+      // alert('Failed to add friend.');
     }
   }
 
   render() {
     return (
-
       <div className="landing-page-container">
         <p> Codesling.io</p>
-        <Nav handleShowUsers={this.handleShowUsers} handleShowFriends={this.handleShowFriends}/>
+        <Nav handleShowUsers={this.handleShowUsers} handleShowFriends={this.handleShowFriends} />
         <p>Your clout: {this.state.clout}</p>
         <select onChange={e => this.handleChallengeSelect(e)}>
           {this.state.allChallenges.map((challenge, index) => (
@@ -124,7 +116,7 @@ class Home extends Component {
             </option>
           ))}
         </select>
-        <br /> 
+        <br />
         <br />
 
         <Button
@@ -140,7 +132,7 @@ class Home extends Component {
           text="Duel"
           onClick={() => this.handleDuelClick()}
         />
-        {this.state.render === 'users' && <Users allUsers={this.state.allUsers} handleAddFriendClick={this.handleAddFriendClick}/>}
+        {this.state.render === 'users' && <Users allUsers={this.state.allUsers} handleAddFriendClick={this.handleAddFriendClick} />}
         {this.state.render === 'friends' && <Friends allFriends={this.state.allFriends} />}
       </div>
     );
