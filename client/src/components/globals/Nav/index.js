@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
 import Logo from '../Logo'
 import Button from '../Button'; 
 
-export default ({handleShowUsers}) => (
+export default ({handleShowUsers, handleShowFriends}) => (
   
   <div className="navBar">
-          {/* <Logo
-            className="landing-page-logo"
-          /> */}
+          
           <Button 
             className="navButton"
             backgroundColor="red"
             color="white"
-            text="Users">
+            text="Users"
+            onClick={() => handleShowUsers()}>
           </Button>
           <Button 
             className="navButton"
             backgroundColor="red"
             color="white"
             text="Friends"
-            onClick={() => handleShowUsers}>
+            onClick={() => handleShowFriends}>
           </Button>
     <style> 
       {`
@@ -30,6 +29,9 @@ export default ({handleShowUsers}) => (
       .navBar {
         height: 80px;
         background-color: #c24040
+      }
+      .navButton {
+        margin: 10px;
       }
       
       `}

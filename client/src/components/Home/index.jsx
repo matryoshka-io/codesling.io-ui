@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import randomstring from 'randomstring';
 import axios from 'axios';
 
 import Button from '../globals/Button';
 import Logo from '../globals/Logo';
-import Nav from '../globals/Nav'
+import Nav from '../globals/Nav';
+import Users from '../Users';
+import Friends from '../Friends';
 
 import './LandingPage.css';
 
@@ -75,11 +77,11 @@ class Home extends Component {
   //   this.setState({ selectedFriend: value });
   // }
   handleShowUsers = () => {
-    console.log('my users are')
-  }
+    this.setState({ render: 'users' });
+   }
 
   handleShowFriends = () => {
-    console.log('my friends are')
+    this.setState({ render: 'friends' });
   }
 
 
@@ -105,7 +107,8 @@ class Home extends Component {
 
       <div className="landing-page-container">
         <p> Codesling.io</p>
-        <Nav handleShowUsers={this.handleShowUsers}/>
+        <Nav handleShowUsers={this.handleShowUsers} handleShowFriends={this.handleShowFriends}/>
+         
         {/* <div className="navBar">
           <Logo
             className="landing-page-logo"
@@ -146,8 +149,9 @@ class Home extends Component {
           }
           )}
         </select>
-        <br />
         <br /> */}
+        <br />
+
         <Button
           backgroundColor="red"
           color="white"
@@ -161,9 +165,13 @@ class Home extends Component {
           text="Duel"
           onClick={() => this.handleDuelClick()}
         />
-        {/* <Switch>
-          <Route path='/users' component={Users} />
-        </Switch> */}
+        {/* <Router>
+          <Switch>
+            <Route path="/home/users" component={Users}/>
+          </Switch>
+        </Router> */}
+        {this.state.render === 'users' && <Users allUsers={this.state.allUsers} />}
+        {this.state.render === 'friends' && <Friends allFriends={this.state.allFriends} />}
       </div>
     );
   }
