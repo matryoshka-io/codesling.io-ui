@@ -42,15 +42,18 @@ class MessageBox extends Component {
 
   render() {
     return (
-      <div className="messaging-box">
-        <div className="display-message">
-          {this.state.allChats.map((chat, index) => {
-            return (
-              <div>
-                {chat.user} {chat.messages}
-              </div>
-            )
-          })}
+      <div class="container">
+        Say something to your opponent
+      <div className="messageView">
+        {this.state.allChats.map((chat, index) => {
+          return (
+            <div>
+              {chat.user} {chat.messages}
+            </div>
+          )
+        })}
+      </div>
+        <div className="messaging-box">
           <div className="message-bar">
             <input id="text" type="text" onChange={e => this.onTextChangeHandler(e)} />
             <Button

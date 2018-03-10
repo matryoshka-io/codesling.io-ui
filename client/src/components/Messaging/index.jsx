@@ -8,15 +8,9 @@ class MessagingIndex extends Component {
   }
   render() {
     return (
-      <div className="messaging">
+      // <div className="messaging">
         <MessageBox socket={this.props.socket} />
-        <style>{`
-        #text {
-          width: 225px;
-          height: 10px;
-        }
-        `}</style>
-      </div>
+      // </di?v>
     )
   }
 }
