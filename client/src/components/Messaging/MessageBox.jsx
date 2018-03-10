@@ -36,7 +36,7 @@ class MessageBox extends Component {
   sendMessage = () => {
     const { socket } = this.props;
     const ownerEmail = localStorage.getItem('email');
-    socket.emit('client.chat', { user: ownerEmail, messages: this.state.message })
+    socket.emit('client.chat', { user: ownerEmail, messages: this.state.message });
   }
 
   render() {

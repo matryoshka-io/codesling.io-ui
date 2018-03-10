@@ -2,6 +2,7 @@
   "parser": "babel-eslint",
   "globals": {
     "localStorage": false,
-    "window": false
+    "window": false,
+    "document": false
   }
 }
