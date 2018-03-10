@@ -23,7 +23,7 @@ class Sling extends Component {
     super();
     this.state = {
       challengerText: null,
-      challenge: '',
+      challenge: {},
       stdout: '',
       solvable: true,
       winner: '',
@@ -150,7 +150,7 @@ class Sling extends Component {
 }
 
 Sling.propTypes = {
-  challenge: PropTypes.object.isRequired, // eslint-disable-line
+  challenge: PropTypes.string.isRequired, // eslint-disable-line
   socket: PropTypes.object.isRequired, // eslint-disable-line
 };
 

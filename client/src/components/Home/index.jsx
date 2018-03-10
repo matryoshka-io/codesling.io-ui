@@ -59,8 +59,9 @@ class Home extends Component {
         <br />
         <p>Your clout: {this.state.clout}</p>
         <select onChange={e => this.handleChallengeSelect(e)}>
-          {this.state.allChallenges.map(challenge => (
+          {this.state.allChallenges.map((challenge, index) => (
             <option
+              key={index} // eslint-disable-line
               value={JSON.stringify(challenge)}
             >
               {challenge.title}
@@ -88,7 +89,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  history: PropTypes.array.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
 };
 
 export default Home;
