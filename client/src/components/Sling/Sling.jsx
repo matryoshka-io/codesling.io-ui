@@ -59,7 +59,6 @@ class Sling extends Component {
     socket.on('server.run', ({ stdout, email, solvable, timeStarted }) => { // eslint-disable-line
       const ownerEmail = localStorage.getItem('email');
       email === ownerEmail ? this.setState({ stdout }) : null; // eslint-disable-line
-      // console.log(timeStarted);
       if (!solvable) {
         const timeTaken = ((new Date()) - (new Date(timeStarted))) / 1000;
         this.setState({
